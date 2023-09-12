@@ -31,17 +31,37 @@ public partial class @CharacterControl: IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""6c72bd40-796f-4973-bd84-cecf11bf080e"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""9cc62c3f-bb05-4722-afd1-134815cabc43"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""[Keyboard] WASD"",
-                    ""id"": ""792f0014-e493-42a6-9ae7-eb5a6cdd37fb"",
-                    ""path"": ""2DVector"",
+                    ""name"": """",
+                    ""id"": ""9fa84c3a-8cfb-42e8-844f-ffb87bd8e138"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""[Keyboard] AD"",
+                    ""id"": ""d1da6ae2-6a23-46f1-9e56-ee837c5e6666"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -50,30 +70,8 @@ public partial class @CharacterControl: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""26155108-2cd6-4115-9251-c5417bd8f390"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""021825f6-1c55-44cc-a853-308a8e38e5d4"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""ebd72f2a-83fe-489a-8734-9d0b22d1e5cc"",
+                    ""name"": ""negative"",
+                    ""id"": ""bf6d42ef-3a73-4051-aaf2-8838276f6c22"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -83,8 +81,8 @@ public partial class @CharacterControl: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""ff63dba9-58ca-4015-b9d6-27c67f4faf24"",
+                    ""name"": ""positive"",
+                    ""id"": ""1ca9be1e-fa0f-4ab8-87c5-352c15b4efde"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -95,12 +93,23 @@ public partial class @CharacterControl: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9fa84c3a-8cfb-42e8-844f-ffb87bd8e138"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""id"": ""0f9d2568-a71e-4506-bc0b-e4c72eed35d2"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba81b07f-fd7b-4c3c-956c-f7658638ecbc"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -112,6 +121,7 @@ public partial class @CharacterControl: IInputActionCollection2, IDisposable
         // PlayerBehaviour
         m_PlayerBehaviour = asset.FindActionMap("PlayerBehaviour", throwIfNotFound: true);
         m_PlayerBehaviour_Move = m_PlayerBehaviour.FindAction("Move", throwIfNotFound: true);
+        m_PlayerBehaviour_Jump = m_PlayerBehaviour.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -174,11 +184,13 @@ public partial class @CharacterControl: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerBehaviour;
     private List<IPlayerBehaviourActions> m_PlayerBehaviourActionsCallbackInterfaces = new List<IPlayerBehaviourActions>();
     private readonly InputAction m_PlayerBehaviour_Move;
+    private readonly InputAction m_PlayerBehaviour_Jump;
     public struct PlayerBehaviourActions
     {
         private @CharacterControl m_Wrapper;
         public PlayerBehaviourActions(@CharacterControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerBehaviour_Move;
+        public InputAction @Jump => m_Wrapper.m_PlayerBehaviour_Jump;
         public InputActionMap Get() { return m_Wrapper.m_PlayerBehaviour; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -191,6 +203,9 @@ public partial class @CharacterControl: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
         }
 
         private void UnregisterCallbacks(IPlayerBehaviourActions instance)
@@ -198,6 +213,9 @@ public partial class @CharacterControl: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
         }
 
         public void RemoveCallbacks(IPlayerBehaviourActions instance)
@@ -218,5 +236,6 @@ public partial class @CharacterControl: IInputActionCollection2, IDisposable
     public interface IPlayerBehaviourActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }
