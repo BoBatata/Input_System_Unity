@@ -8,12 +8,21 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     private CharacterControl characterControls;
+
     private Transform playerTransform;
+
     private Vector2 moveDirection;
+
     private Rigidbody2D rididbody;
+
+    private int numberOfJumps = 0;
+
+    [HideInInspector] public int nutsCollectables = 0;
 
     [SerializeField] private float velocity = 10;
     [SerializeField] private float jumpForce = 400;
+    [SerializeField] private int maxNumberOfJumps = 2;
+    [SerializeField] private int numberOfNutsToWin;
 
     private void Awake()
     {
@@ -33,7 +42,9 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         MovePlayer();
+        CheckVictory();
     }
+
 
     private void MovePlayer()
     {
@@ -43,9 +54,10 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isJumpPressed = context.ReadValueAsButton();
 
-        if (isJumpPressed) 
+        if (isJumpPressed && numberOfJumps < maxNumberOfJumps) 
         {
-            rididbody.AddForce(Vector2.up * jumpForce); ;
+            rididbody.AddForce(Vector2.up * jumpForce);
+            numberOfJumps++;
         }
     }
 
@@ -54,6 +66,13 @@ public class PlayerMovement : MonoBehaviour
         moveDirection.x = context.ReadValue<float>();
     }
 
+    private void CheckVictory()
+    {
+        if (nutsCollectables >= numberOfNutsToWin)
+        {
+            print("Win");
+        }
+    }
     private void OnEnable()
     {
         characterControls.Enable();
@@ -65,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
         characterControls.PlayerBehaviour.Move.canceled -= OnMoveInputReceived;
         characterControls.PlayerBehaviour.Move.performed -= OnMoveInputReceived;
         characterControls.Disable();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        numberOfJumps = 0;
     }
 
 }
