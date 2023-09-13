@@ -21,7 +21,8 @@ public class CollectableScript : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerMovement>().nutsCollectables++;
+            collision.gameObject.GetComponent<PlayerMovement>().cherrysCollectables++;
+            Destroy(this.gameObject);
         }
     }
 }

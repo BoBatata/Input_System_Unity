@@ -9,26 +9,28 @@ public class PlayerMovement : MonoBehaviour
 {
     private CharacterControl characterControls;
 
+    private Rigidbody2D rididbody;
+
     private Transform playerTransform;
 
     private Vector2 moveDirection;
 
-    private Rigidbody2D rididbody;
-
     private int numberOfJumps = 0;
 
-    [HideInInspector] public int nutsCollectables = 0;
+    [HideInInspector] public int cherrysCollectables = 0;
 
     [SerializeField] private float velocity = 10;
     [SerializeField] private float jumpForce = 400;
     [SerializeField] private int maxNumberOfJumps = 2;
-    [SerializeField] private int numberOfNutsToWin;
+    [SerializeField] private int numberOfCherrysToWin;
 
     private void Awake()
     {
         rididbody = GetComponent<Rigidbody2D>();
-        playerTransform = GetComponent<Transform>();
+
         characterControls = new CharacterControl();
+
+        playerTransform = GetComponent<Transform>();
 
         characterControls.PlayerBehaviour.Move.started += OnMoveInputReceived;
         characterControls.PlayerBehaviour.Move.canceled += OnMoveInputReceived;
@@ -43,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         CheckVictory();
+        print(numberOfJumps);
     }
 
 
@@ -68,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckVictory()
     {
-        if (nutsCollectables >= numberOfNutsToWin)
+        if (cherrysCollectables >= numberOfCherrysToWin)
         {
             print("Win");
         }
@@ -86,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         characterControls.Disable();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         numberOfJumps = 0;
     }

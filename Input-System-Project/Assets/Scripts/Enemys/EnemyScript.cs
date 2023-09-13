@@ -11,10 +11,9 @@ public class EnemyScript : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     [SerializeField] private Sprite sprite;
-
     [SerializeField] private Vector2 rightSidePos;
     [SerializeField] private Vector2 leftSidePos;
-    [SerializeField] private int velocity = 5;
+    [SerializeField] private int velocity = 10;
 
     private void Awake()
     {
@@ -36,7 +35,7 @@ public class EnemyScript : MonoBehaviour
                 for (float i = transform.position.x; transform.position.x < rightSidePos.x; i++)
                 {
                     yield return new WaitForSeconds(0.1f);
-                    transform.Translate(Vector2.right * Time.deltaTime * velocity);
+                    transform.Translate(Vector2.right * velocity * Time.deltaTime);
                 }
             }
             else if (transform.position.x > leftSidePos.x)
@@ -44,7 +43,7 @@ public class EnemyScript : MonoBehaviour
                 for (float i = transform.position.x; transform.position.x < leftSidePos.x; i++)
                 {
                     yield return new WaitForSeconds(0.1f);
-                    transform.Translate(Vector2.left * Time.deltaTime * velocity);
+                    transform.Translate(Vector2.left * velocity * Time.deltaTime);
                 }
             }
 

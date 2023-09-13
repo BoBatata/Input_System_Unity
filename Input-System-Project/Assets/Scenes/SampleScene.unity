@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 328713628}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -313,11 +313,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c33c37790a1fdb4c830a11cdc95db99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nutsCollectables: 0
+  cherrysCollectables: 0
   velocity: 5
   jumpForce: 400
   maxNumberOfJumps: 2
-  numberOfNutsToWin: 0
+  numberOfCherrysToWin: 3
 --- !u!50 &328713629
 Rigidbody2D:
   serializedVersion: 4
@@ -7328,7 +7328,7 @@ GameObject:
   - component: {fileID: 1362560361}
   - component: {fileID: 1362560360}
   m_Layer: 0
-  m_Name: slimer1
+  m_Name: '[Enemy] Slime'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7366,7 +7366,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.04604435, y: -0.47195232}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7377,7 +7377,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.5625, y: 2.375}
+  m_Size: {x: 1.6416168, y: 1.4310954}
   m_EdgeRadius: 0
 --- !u!212 &1362560361
 SpriteRenderer:
@@ -7455,7 +7455,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362560359}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.15, y: -2.52, z: 0}
+  m_LocalPosition: {x: -8.15, y: -2.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
