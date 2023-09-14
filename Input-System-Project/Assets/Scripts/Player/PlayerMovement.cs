@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement instance;
+
     private CharacterControl characterControls;
 
     private Rigidbody2D rididbody;
@@ -15,17 +17,41 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 moveDirection;
 
+    private SpriteRenderer spriteRenderer;
+
+    public Animator animator { get; set; }
+
     private int numberOfJumps = 0;
+    public bool isRunning { get; set; }
+
+    public bool isJumping = true;
+
+    public bool isFalling { get; set; }
 
     [HideInInspector] public int cherrysCollectables = 0;
 
     [SerializeField] private float velocity = 10;
-    [SerializeField] private float jumpForce = 400;
+    [SerializeField] private float jumpForce = 300;
     [SerializeField] private int maxNumberOfJumps = 2;
     [SerializeField] private int numberOfCherrysToWin;
 
     private void Awake()
     {
+        #region Singleton
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+        #endregion
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        animator = GetComponent<Animator>();
+
         rididbody = GetComponent<Rigidbody2D>();
 
         characterControls = new CharacterControl();
@@ -61,12 +87,15 @@ public class PlayerMovement : MonoBehaviour
         {
             rididbody.AddForce(Vector2.up * jumpForce);
             numberOfJumps++;
+            isJumping = true;
         }
     }
 
     private void OnMoveInputReceived(InputAction.CallbackContext context)
     {
         moveDirection.x = context.ReadValue<float>();
+        isRunning = moveDirection.x == 1 || moveDirection.x == -1;
+        FlipSprite(moveDirection.x);
     }
 
     private void CheckVictory()
@@ -92,6 +121,30 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         numberOfJumps = 0;
+        isJumping = false;
+    }
+
+    public bool CheckPlayerRunning()
+    {
+        return isRunning;
+    }
+
+    public bool CheckPlayerJumping()
+    {
+        return isJumping;
+    }
+
+    private void FlipSprite(float moveDirection)
+    {
+        if (moveDirection == 1)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (moveDirection == -1) 
+        {
+            spriteRenderer.flipX = true;
+        }
+
     }
 
 }
