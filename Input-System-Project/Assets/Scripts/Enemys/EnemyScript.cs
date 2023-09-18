@@ -25,6 +25,11 @@ public class EnemyScript : MonoBehaviour
         StartCoroutine(MoveEnemy());
     }
 
+    private void Update()
+    {
+        FlipSprite();
+    }
+
     private IEnumerator MoveEnemy()
     {
 
@@ -38,7 +43,7 @@ public class EnemyScript : MonoBehaviour
                     transform.Translate(Vector2.right * velocity * Time.deltaTime);
                 }
             }
-            else if (transform.position.x > leftSidePos.x)
+            else if (transform.position.x < leftSidePos.x)
             {
                 for (float i = transform.position.x; transform.position.x < leftSidePos.x; i++)
                 {
@@ -47,7 +52,22 @@ public class EnemyScript : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(3);
+
         }
     }
+
+    private void FlipSprite()
+    {
+        if (transform.position.x == 1)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (transform.position.x == -1)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+    }
+
 }

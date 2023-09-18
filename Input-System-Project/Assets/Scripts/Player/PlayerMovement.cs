@@ -28,12 +28,12 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isFalling { get; set; }
 
-    [HideInInspector] public int cherrysCollectables = 0;
+    public int cherrysCollectables = 3;
 
     [SerializeField] private float velocity = 10;
     [SerializeField] private float jumpForce = 300;
     [SerializeField] private int maxNumberOfJumps = 2;
-    [SerializeField] private int numberOfCherrysToWin;
+    [SerializeField] public int numberOfCherrysToWin;
 
     private void Awake()
     {
@@ -72,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
         CheckVictory();
         print(numberOfJumps);
+
     }
 
 
@@ -145,6 +146,18 @@ public class PlayerMovement : MonoBehaviour
             spriteRenderer.flipX = true;
         }
 
+    }
+
+    public int CheckNumberOfCherrysToWin(int CherrysToWin)
+    {
+        CherrysToWin = numberOfCherrysToWin;
+        return numberOfCherrysToWin;
+    }
+
+    public int CheckCherrysCollectables(int collectablesCherrys)
+    {
+        collectablesCherrys = cherrysCollectables;
+        return cherrysCollectables;
     }
 
 }

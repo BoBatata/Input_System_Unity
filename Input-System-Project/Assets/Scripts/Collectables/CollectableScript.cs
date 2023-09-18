@@ -10,6 +10,7 @@ public class CollectableScript : MonoBehaviour
     [SerializeField] private Sprite collectableSprite;
 
     private SpriteRenderer spriteRenderer;
+    private int cherrysCollectables;
 
     private void Awake()
     {
