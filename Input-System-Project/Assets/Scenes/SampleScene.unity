@@ -241,8 +241,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinContainer: {fileID: 307830168}
-  collectText: {fileID: 0}
-  collectToWinText: {fileID: 0}
+  collectText: {fileID: 2138282906}
+  collectToWinText: {fileID: 2015382238}
 --- !u!1 &266741245
 GameObject:
   m_ObjectHideFlags: 0
@@ -8187,7 +8187,7 @@ GameObject:
   - component: {fileID: 2015382239}
   - component: {fileID: 2015382238}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: CherryToCollect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
