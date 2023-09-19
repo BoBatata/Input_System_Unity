@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     public int cherrysCollectables = 3;
 
+    private bool playerAlive = true;
+
+
     [SerializeField] private float velocity = 10;
     [SerializeField] private float jumpForce = 300;
     [SerializeField] private int maxNumberOfJumps = 2;
@@ -71,7 +74,6 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         CheckVictory();
-        print(numberOfJumps);
 
     }
 
@@ -123,6 +125,13 @@ public class PlayerMovement : MonoBehaviour
     {
         numberOfJumps = 0;
         isJumping = false;
+
+        if (collision.collider.CompareTag("Enemy"))
+        {
+            playerAlive = false;
+            playerAlive = UIManager.instance.CheckPlayerAlive(playerAlive);
+            Destroy(gameObject);
+        }
     }
 
     public bool CheckPlayerRunning()

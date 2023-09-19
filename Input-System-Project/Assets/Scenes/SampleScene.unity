@@ -243,6 +243,7 @@ MonoBehaviour:
   WinContainer: {fileID: 307830168}
   collectText: {fileID: 2138282906}
   collectToWinText: {fileID: 2015382238}
+  vitoriaDerrotaText: {fileID: 1872717500}
 --- !u!1 &266741245
 GameObject:
   m_ObjectHideFlags: 0
@@ -7726,7 +7727,7 @@ GameObject:
   - component: {fileID: 1362560364}
   m_Layer: 0
   m_Name: '[Enemy] Slime'
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

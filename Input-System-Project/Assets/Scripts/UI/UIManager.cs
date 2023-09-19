@@ -11,9 +11,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform WinContainer;
     [SerializeField] private TextMeshProUGUI collectText;
     [SerializeField] private TextMeshProUGUI collectToWinText;
+    [SerializeField] private TextMeshProUGUI vitoriaDerrotaText;
 
     private int cherrysCollectables;
     private int numberOfCherrysToWin;
+    private bool playerAlive = true;
 
     private void Awake()
     {
@@ -39,13 +41,23 @@ public class UIManager : MonoBehaviour
         numberOfCherrysToWin = PlayerMovement.instance.CheckNumberOfCherrysToWin(numberOfCherrysToWin);
         if (cherrysCollectables >= numberOfCherrysToWin)
         {
-            print("aqui");
+            WinContainer.gameObject.SetActive(true);
+        }
+        else if (playerAlive == false)
+        {
+            vitoriaDerrotaText.text = "Derrota";
             WinContainer.gameObject.SetActive(true);
         }
         else
         {
             WinContainer.gameObject.SetActive(false);
         }
+    }
+
+    public bool CheckPlayerAlive(bool isAlive)
+    {
+        playerAlive = isAlive;
+        return playerAlive;
     }
 
 }
